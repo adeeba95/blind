@@ -5,17 +5,6 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title></title>
 
-    <link rel="manifest" href="manifest.json">
-
-    <!-- un-comment this code to enable service worker
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js')
-          .then(() => console.log('service worker installed'))
-          .catch(err => console.log('Error', err));
-      }
-    </script>-->
-
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
@@ -31,15 +20,116 @@
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/script.js"></script>
   </head>
-  <body ng-app="starter">
+  <body ng-app="noteit">
 
     <ion-pane>
-      <ion-header-bar class="bar-stable">
-        <h1 class="title">Ionic Blank Starter</h1>
-      </ion-header-bar>
-      <ion-content>
-      </ion-content>
+      <ion-nav-bar class="bar-positive" align-title="center">
+        <ion-nav-back-button></ion-nav-back-button>
+      </ion-nav-bar>
+      <ion-nav-view></ion-nav-view>
+
+      <!-- HOME -->
+      <script type="text/ng-template" id="home.html">
+        <ion-view view-title="Home">
+          <ion-content class="note-content">
+            <div class="row">
+              <div class="col">
+                <h3 class="text-center">BLIND AUDIOBOOK</h3>
+
+                <a class="button button-block button-positive" ui-sref="login" href="#/login">DONOR</a>
+
+                <a class="button button-block button-positive" ui-sref="listen" href="#/listen">LISTENER</a>
+        
+              </div>
+            </div>
+          </ion-content>
+        </ion-view>
+      </script>
+
+      <!-- login -->
+      <script type="text/ng-template" id="login.html">
+        <ion-view view-title="Login">
+          <ion-content class="note-content">
+            <div class="row">
+              <div class="col">
+               <div class="list" ng-controller="LoginCtrl">
+                <div class="app-logo"><img src="img/ionic.png"></div> 
+                
+                <div class="list list-inset removePM">
+                  <label class="item item-input"><input type="text" ng-model="user.username" placeholder="Email Address" > </label>
+                  <label class="item item-input"><input type="password" ng-model="user.password" placeholder="Password" > </label>
+                </div>
+
+                <div class="loginButton"><button class="button ion-unlocked button-block button-balanced" ng-click="login(user);" > Login </button>  </div>
+                <div class="loginButton"><button class="button ion-person button-block button-balanced" ui-sref="signup" href="#/signup"> Register </button></div>
+               </div> 
+              </div>
+            </div>
+
+            <div class="row  padding removePM">
+              <div class="col"> <a class=" button-positive button button-block" ng-click="facebookSignIn()"><i class="icon ion-social-facebook"></i></a> </div>
+              <div class="col"> <a class="button-calm button button-block" ng-click="twitterSignIn()"><i class="icon ion-social-twitter"></i></a> </div>
+            </div>
+          </ion-content>
+        </ion-view>
+      </script>
+
+      <!-- signup -->
+      <script type="text/ng-template" id="signup.html">
+        <ion-view view-title="Sign Up" class="loginBg" hide-nav-bar="true" >
+          <ion-content class="padding">
+
+          <div class="row responsive-sm padding remvoeBP">
+            <div class="col">
+             <div class="list" ng-controller="SignupCtrl"> 
+               <div class="app-logo"><img src="img/ionic.png"></div>
+              
+              <div class="list list-inset removePM">
+                <label class="item item-input"><input type="text" placeholder="Full Name"> </label>
+                <label class="item item-input"><input type="text" placeholder="Email Address"> </label>
+                <label class="item item-input"><input type="text" placeholder="Phone Number"> </label>
+                <label class="item item-input"><input type="password" placeholder="Password"> </label>
+              </div>
+
+              <div class="loginButton"><button class="button ion-person button-block button-balanced" ui-sref="login" href="#/login"> Register </button></div>
+             </div> 
+            </div>
+          </div>
+
+          <div class="row  padding removePM">
+            <div class="col"> <a class=" button-positive button button-block" ng-click="facebookSignIn()"><i class="icon ion-social-facebook"></i></a> </div>
+            <div class="col"> <a class="button-calm button button-block" ng-click="twitterSignIn()"><i class="icon ion-social-twitter"></i></a> </div>
+          </div>
+
+          </ion-content>
+        </ion-view>
+      </script>  
+
+      <!-- menu -->
+      <script type="text/ng-template" id="listen.html">
+        <ion-view view-title="Listen">
+          <ion-content class="note-content">
+            <div ng-controller="expandCollapseCtrl">
+              <div class="panel panel-default">
+                <div class="panel-heading collapsed" data-toggle="collapse" data-target="#collapseList">
+                  <h3 class="panel-title">
+                    Collapsible List Group
+                  </h3>
+                </div>
+                <ul id="collapseList" class="list-group collapse">
+                   <li class="list-group-item">Bootply</li>
+                   <li class="list-group-item">Triveo</li>
+                   <li class="list-group-item">Behance</li>
+                </ul>
+              </div><!--/panel-->
+             </div> 
+          </ion-content>
+        </ion-view>  
+      </script> 
+
     </ion-pane>
   </body>
 </html>
