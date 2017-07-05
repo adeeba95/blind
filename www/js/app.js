@@ -44,7 +44,7 @@ app.config(function($stateProvider, $urlRouterProvider){
   $stateProvider.state('listen', {
     url: '/listen',
     templateUrl: 'listen.html',
-    controller: 'ListenCtrl'
+    controller: 'MyCtrl'
   });
 
    $stateProvider.state('editNote', {
