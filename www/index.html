@@ -37,7 +37,7 @@
           <ion-content class="note-content">
             <div class="row">
               <div class="col">
-                <h3 class="text-center">BLIND AUDIOBOOKsss</h3>
+                <h3 class="text-center">BLIND AUDIOBOOK</h3>
 
                 <a class="button button-block button-positive" ui-sref="login" href="#/login">DONOR</a>
 
@@ -112,7 +112,9 @@
       <script type="text/ng-template" id="listen.html">
         <ion-view view-title="Listen">
           <ion-content class="note-content">
-            <div ng-controller="expandCollapseCtrl">
+          <div class="row">
+          <div class="col">
+            <!-- <div class="panel panel-default" ng-controller="expandCollapseCtrl">
               <div class="panel panel-default">
                 <div class="panel-heading collapsed" data-toggle="collapse" data-target="#collapseList">
                   <h3 class="panel-title">
@@ -123,9 +125,28 @@
                    <li class="list-group-item">Bootply</li>
                    <li class="list-group-item">Triveo</li>
                    <li class="list-group-item">Behance</li>
-                </ul>
-              </div><!--/panel-->
-             </div> 
+                </ul> -->
+                  <div class="panel panel-default" id="accordion" >
+                    <div role="tab" id="headingOne">
+                         <a role="button" href="javascript:;" data-toggle="collapse" data-parent="#accordion" 
+                            data-target="#collapseList" aria-expanded="false" aria-controls="collapseList">
+                              Click me
+                          </a>
+                    </div>
+                    <!-- <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                       aria-labelledby="headingOne">
+                          Data
+                    </div> -->
+                    <ul id="collapseList" class="list-group collapse">
+                       <li class="list-group-item">Bootply</li>
+                       <li class="list-group-item">Triveo</li>
+                       <li class="list-group-item">Behance</li>
+                    </ul>  
+                  </div>
+              </div>
+             </div>
+           </div>
+           </div>   
           </ion-content>
         </ion-view>  
       </script> 
