@@ -47,22 +47,22 @@ app.config(function($stateProvider, $urlRouterProvider){
     controller: 'MyCtrl'
   });
 
-   $stateProvider.state('editNote', {
-    url: '/edit',
-    templateUrl: 'editNote.html',
-    controller: 'EditNoteCtrl'
+   $stateProvider.state('player', {
+    url: '/player',
+    templateUrl: 'player.html',
+    controller: 'PlayerCtrl'
   });
 
-  $stateProvider.state('updateNote', {
-    url: '/edit/:id',
-    templateUrl: 'updateNote.html',
-    controller: 'UpdateNoteCtrl'
+  $stateProvider.state('donor', {
+    url: 'donor',
+        templateUrl: 'donor.html',
+    controller: 'DonorCtrl'
   });
 
-  $stateProvider.state('deleteNote', {
-    url: '/delete',
-    templateUrl: 'deleteNote.html',
-    controller: 'DeleteNoteCtrl'
+  $stateProvider.state('list', {
+    url: '/list',
+    templateUrl: 'list.html',
+    controller: 'ListCtrl'
   });
 
   $urlRouterProvider.otherwise('/');

@@ -45,3 +45,15 @@ app.controller('MyCtrl', function($scope) {
   };
   
 });
+
+app.controller('PlayerCtrl', function($scope){
+	console.log('PlayerCtrl loaded');
+});
+
+app.controller('DonorCtrl', function($scope){
+	console.log('DonorCtrl loaded');
+});
+
+app.controller('ListCtrl', function($scope){
+	console.log('ListCtrl loaded');
+});
