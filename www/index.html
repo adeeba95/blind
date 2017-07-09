@@ -21,7 +21,7 @@
     <!-- your app's js -->
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
-    <script src="js/script.js"></script>
+    <!-- <script src="js/script.js"></script> -->
   </head>
   <body ng-app="noteit">
 
@@ -42,6 +42,8 @@
                 <a class="button button-block button-positive" ui-sref="login" href="#/login">DONOR</a>
 
                 <a class="button button-block button-positive" ui-sref="listen" href="#/listen">LISTENER</a>
+
+                <a class="button button-block button-light" ui-sref="admin" href="#/admin">ADMINISTRATOR</a>
         
               </div>
             </div>
@@ -108,7 +110,7 @@
         </ion-view>
       </script>  
 
-      <!-- menu -->
+      <!-- listenmenu -->
       <script type="text/ng-template" id="listen.html">
         <ion-view view-title="Listen">
           <ion-content class="note-content">
@@ -175,18 +177,117 @@
           <ion-content class="note-content">
             <div class="row">
               <div class="col">
-               <div class="list" ng-controller="LoginCtrl">
-                <h3>
-                 09:45
-                </h3>
-                <img src="img/voice2.png"/>
-                
-                <button class="button button-icon record_btn">
-                  <i class="ion-android-microphone"></i>
-                </button>
-                 
-                <p>Tap To Resume Recording</p>
-               
+               <div class="list" ng-controller="PlayerCtrl">
+                <a style="text-align:center;">             
+                  <h2 style="color:blue;">09:45</h2>
+                  <img src="img/audio-image-1.jpg">
+                  <!-- <button class="button button-full button-large" class="button button-icon record_btn">
+                    <i class="ion-android-microphone"></i>
+                  </button>
+                  <h6 style="color:black;">Tap To Resume Recording</h6> -->
+                </a>
+s               <div class="col">
+                  <a href="#" class="button button-block">
+                    Play
+                  </a>      
+                </div>
+                  <!-- <div class="row two_btn">
+                      <div class="col">
+                        <a  href="#"  class="button button-block main_btn">
+                          Delete
+                        </a>
+                      </div>
+                      <div class="col">
+                        <a href="#" class="button button-block">
+                          Upload
+                        </a>
+                      </div>
+                  </div>  -->
+                </div>        
+              </div>
+            </div>
+          </ion-content>
+        </ion-view>
+      </script> 
+
+      <!-- DONOR -->
+      <script type="text/ng-template" id="donor.html">
+        <ion-view view-title="List of Audiobook">
+          <ion-content class="note-content">
+           <div class="list" ng-controller="DonorCtrl">
+            <div class="row">
+              <div class="col">
+                <!-- <ion-header>
+                  <ion-navbar>
+                    <ion-title>List of Audiobook</ion-title>
+                  </ion-navbar>
+                </ion-header> -->
+                <ion-list>
+                 <!--  <ion-list-header>
+                    List of Audiobook
+                  </ion-list-header> -->
+
+                  <ion-item>
+                    <ion-thumbnail item-start>
+                      <img src="img/book.jpg">
+                    </ion-thumbnail>
+                    <h2>My Neighbor Totoro</h2>
+                    <p>Hayao Miyazaki • 1988</p>
+                    <button class='ion-button clear item-end' ui-sref="list" href="#/list">View</button>
+                  </ion-item>
+
+                  <ion-item>
+                    <ion-thumbnail item-start>
+                      <img src="img/book.jpg">
+                    </ion-thumbnail>
+                    <h2>My Neighbor Totoro</h2>
+                    <p>Hayao Miyazaki • 1988</p>
+                    <button ion-button clear item-end >View</button>
+                  </ion-item>
+                </ion-list>        
+              </div>
+              </div>
+            </div>
+          </ion-content>
+        </ion-view>
+      </script>
+
+      <!--list -->
+      <script type="text/ng-template" id="list.html">
+        <ion-view view-title="List of Chapter">
+          <ion-content class="note-content">
+            <div class="row">
+              <div class="col">
+               <div class="list" ng-controller="ListCtrl">
+                  <ul class="list">
+                      <li class="item" ui-sref="record" href="#/record">Chapter 1</li>
+                      <li class="item" ui-sref="record" href="#/record">Chapter 2</li>
+                      <li class="item" ui-sref="record" href="#/record">Chapter 3</li>
+                  </ul>
+              </div>
+              </div>
+            </div>
+          </ion-content>
+        </ion-view>
+      </script>
+
+      <!-- RECORD -->
+      <script type="text/ng-template" id="record.html">
+        <ion-view view-title="Record">
+          <ion-content class="note-content">
+            
+               <div class="list" ng-controller="RecordCtrl">
+               <div class="row">
+              <div class="col">
+                <a style="text-align:center;">             
+                  <h2 style="color:blue;">09:45</h2>
+                  <img src="img/audio-image-1.jpg">
+                  <button class="button button-full button-large" class="button button-icon record_btn">
+                    <i class="ion-android-microphone"></i>
+                  </button>
+                  <h6 style="color:black;">Tap To Resume Recording</h6>
+                </a>
+
                   <div class="row two_btn">
                       <div class="col">
                         <a  href="#"  class="button button-block main_btn">
@@ -206,74 +307,74 @@
         </ion-view>
       </script> 
 
-      <!-- DONOR -->
-      <script type="text/ng-template" id="donor.html">
-        <ion-view view-title="Donor">
+      <!-- adminnmenu -->
+      <script type="text/ng-template" id="admin.html">
+        <ion-view view-title="Admin">
           <ion-content class="note-content">
-           <div class="list" ng-controller="DonorCtrl">
+
+           <ion-list>
+              <div ng-repeat="group in groups">
+                <ion-item class="item-stable"
+                          ng-click="toggleGroup(group)"
+                          ng-class="{active: isGroupShown(group)}">
+                    <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i>
+                  &nbsp;
+                  Group {{group.name}}
+                </ion-item>
+                <ion-item class="item-accordion"
+                          ng-repeat="item in group.items"
+                          ng-show="isGroupShown(group)"
+                          ui-sref="verify" 
+                          href="#/verify">
+                  {{item}}
+                </ion-item>
+              </div>
+            </ion-list>  
+          </ion-content>
+        </ion-view>  
+      </script>
+
+      <!-- verifying -->
+      <script type="text/ng-template" id="verify.html">
+        <ion-view view-title="Verify">
+          <ion-content class="note-content">
             <div class="row">
               <div class="col">
-                <ion-header>
-                  <ion-navbar>
-                    <ion-title>List of Audiobook</ion-title>
-                  </ion-navbar>
-                </ion-header>
-                <ion-list>
-                 <!--  <ion-list-header>
-                    List of Audiobook
-                  </ion-list-header> -->
-
-                  <ion-item>
-                    <ion-thumbnail item-start>
-                      <img src="assets/img/thumbnail-totoro.png">
-                    </ion-thumbnail>
-                    <h2>My Neighbor Totoro</h2>
-                    <p>Hayao Miyazaki • 1988</p>
-                    <button class='ion-button clear item-end' ui-sref="list" href="#/list">View</button>
-                  </ion-item>
-
-                  <ion-item>
-                    <ion-thumbnail item-start>
-                      <img src="assets/img/thumbnail-totoro.png">
-                    </ion-thumbnail>
-                    <h2>My Neighbor Totoro</h2>
-                    <p>Hayao Miyazaki • 1988</p>
-                    <button ion-button clear item-end >View</button>
-                  </ion-item>
-                </ion-list>        
-              </div>
+               <div class="list" ng-controller="VerifyCtrl">
+                <a style="text-align:center;">             
+                  <h2 style="color:blue;">09:45</h2>
+                  <img src="img/audio-image-1.jpg">
+                  <!-- <button class="button button-full button-large" class="button button-icon record_btn">
+                    <i class="ion-android-microphone"></i>
+                  </button>
+                  <h6 style="color:black;">Tap To Resume Recording</h6> -->
+                </a>
+s               <div class="col">
+                  <a href="#" class="button button-block">
+                    Play
+                  </a>      
+                </div>
+                  <div class="row two_btn">
+                      <div class="col">
+                        <a  ui-sref="admin" href="#/admin"  class="button button-block main_btn">
+                          Delete
+                        </a>
+                      </div>
+                      <div class="col">
+                        <a href="#" class="button button-block">
+                          Upload
+                        </a>
+                      </div>
+                  </div> 
+                </div>        
               </div>
             </div>
           </ion-content>
         </ion-view>
-      </script>
-
-      <script type="text/ng-template" id="list.html">
-        <ion-view view-title="List">
-          <ion-content class="note-content">
-            <div class="row">
-              <div class="col">
-               <div class="list" ng-controller="ListCtrl">
-                <ion-header>
-                  <ion-navbar>
-                    <ion-title>Lists</ion-title>
-                  </ion-navbar>
-                </ion-header>
-
-                <ion-content>
-                  <ion-list>
-                    <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
-                      {{ item }}
-                    </button>
-                  </ion-list>
-                </ion-content>
-              </div>
-              </div>
-            </div>
-          </ion-content>
-        </ion-view>
-      </script>
+      </script> 
 
     </ion-pane>
+    <script src="lib/firebase/firebase.js"></script>
+      <script src="lib/angular-fire/angularfire.min.js"></script>
   </body>
 </html>

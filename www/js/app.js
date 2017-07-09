@@ -65,5 +65,23 @@ app.config(function($stateProvider, $urlRouterProvider){
     controller: 'ListCtrl'
   });
 
+  $stateProvider.state('record', {
+    url: '/record',
+    templateUrl: 'record.html',
+    controller: 'RecordCtrl'
+  });
+
+  $stateProvider.state('admin', {
+    url: '/admin',
+    templateUrl: 'admin.html',
+    controller: 'AdminCtrl'
+  });
+
+  $stateProvider.state('verify', {
+    url: '/verify',
+    templateUrl: 'verify.html',
+    controller: 'VerifyCtrl'
+  });
+
   $urlRouterProvider.otherwise('/');
 });

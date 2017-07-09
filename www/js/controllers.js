@@ -57,3 +57,41 @@ app.controller('DonorCtrl', function($scope){
 app.controller('ListCtrl', function($scope){
 	console.log('ListCtrl loaded');
 });
+
+app.controller('RecordCtrl', function($scope){
+	console.log('RecordCtrl loaded');
+});
+
+app.controller('AdminCtrl', function($scope){
+	console.log('AdminCtrl loaded');
+
+	 $scope.groups = [];
+  for (var l=0; l<10; l++) {
+    $scope.groups[l] = {
+      name: l,
+      items: []
+    };
+    for (var k=0; k<3; k++) {
+      $scope.groups[l].items.push(l + '-' + k);
+    }
+  }
+  
+  /*
+   * if given group is the selected group, deselect it
+   * else, select the given group
+   */
+  $scope.toggleGroup = function(group) {
+    if ($scope.isGroupShown(group)) {
+      $scope.shownGroup = null;
+    } else {
+      $scope.shownGroup = group;
+    }
+  };
+  $scope.isGroupShown = function(group) {
+    return $scope.shownGroup === group;
+  };
+});
+
+app.controller('VerifyCtrl', function($scope){
+	console.log('VerifyCtrl loaded');
+});
