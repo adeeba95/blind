@@ -18,10 +18,26 @@
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
+    <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyDHbWceafLyolKPn1TsvpbA-BZ_Jk-IR9Q",
+        authDomain: "blind-3db9a.firebaseapp.com",
+        databaseURL: "https://blind-3db9a.firebaseio.com",
+        projectId: "blind-3db9a",
+        storageBucket: "blind-3db9a.appspot.com",
+        messagingSenderId: "946176760193"
+      };
+      firebase.initializeApp(config);
+    </script>
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+
     <!-- your app's js -->
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
-    <!-- <script src="js/script.js"></script> -->
+    <script src="js/service.js"></script>
   </head>
   <body ng-app="noteit">
 
@@ -149,6 +165,15 @@
              </div> 
            </div>
            </div>  -->
+           <div class="bar bar-header item-input-inset">
+              <label class="item-input-wrapper">
+                <i class="icon ion-ios-search placeholder-icon"></i>
+                <input type="search" placeholder="Search">
+              </label>
+              <button class="button button-calm">
+                  Cancel
+              </button>
+          </div>
            <ion-list>
               <div ng-repeat="group in groups">
                 <ion-item class="item-stable"
@@ -226,23 +251,34 @@ s               <div class="col">
                  <!--  <ion-list-header>
                     List of Audiobook
                   </ion-list-header> -->
-
-                  <ion-item>
+                  <div class="bar bar-header item-input-inset">
+                    <label class="item-input-wrapper">
+                      <i class="icon ion-ios-search placeholder-icon"></i>
+                      <input type="search" placeholder="Search">
+                    </label>
+                    <button class="button button-calm">
+                      Cancel
+                    </button>
+                  </div>
+                  <button class="button icon-right ion-ios-plus" ui-sref="add" href="#/add">Add</button>
+                  
+                    <!-- <ion-item ng-repeat="book in all_data">
+                      <ion-thumbnail item-start>
+                        <img src="img/book.jpg">
+                      </ion-thumbnail>
+                      <h2>
+                        {{ book.subchapter }}
+                      </h2>
+                      <p>Hayao Miyazaki • 1988</p>
+                      <button class='ion-button clear item-end' ui-sref="list" href="#/list">View</button>
+                    </ion-item> -->
+                    <ion-item>
                     <ion-thumbnail item-start>
                       <img src="img/book.jpg">
                     </ion-thumbnail>
                     <h2>My Neighbor Totoro</h2>
                     <p>Hayao Miyazaki • 1988</p>
                     <button class='ion-button clear item-end' ui-sref="list" href="#/list">View</button>
-                  </ion-item>
-
-                  <ion-item>
-                    <ion-thumbnail item-start>
-                      <img src="img/book.jpg">
-                    </ion-thumbnail>
-                    <h2>My Neighbor Totoro</h2>
-                    <p>Hayao Miyazaki • 1988</p>
-                    <button ion-button clear item-end >View</button>
                   </ion-item>
                 </ion-list>        
               </div>
@@ -258,6 +294,7 @@ s               <div class="col">
           <ion-content class="note-content">
             <div class="row">
               <div class="col">
+
                <div class="list" ng-controller="ListCtrl">
                   <ul class="list">
                       <li class="item" ui-sref="record" href="#/record">Chapter 1</li>
@@ -372,6 +409,37 @@ s               <div class="col">
           </ion-content>
         </ion-view>
       </script> 
+
+      <!-- ADD -->
+      <script type="text/ng-template" id="add.html">
+        <ion-view view-title="Add">
+          <ion-content class="note-content">
+            <div class="row">
+              <div class="col">
+                <div class="list">
+                  <label class="item item-input item-stacked-label">
+                    <span class="input-label">Title</span>
+                    <input type="text" ng-model="newItem.title">
+                  </label>
+                  <label class="item item-input item-stacked-label">
+                    <span class="input-label">Chapter</span>
+                    <input type="text" ng-model="newItem.chapter">
+                  </label>
+                  <label class="item item-input item-stacked-label">
+                    <span class="input-label">Publisher</span>
+                    <input type="text" ng-model="newItem.publisher">
+                  </label>
+                  <label class="item item-input item-stacked-label">
+                    <span class="input-label">Author</span>
+                    <input type="text" ng-model="newItem.author">
+                  </label>
+                </div>
+        
+              </div>
+            </div>
+          </ion-content>
+        </ion-view>
+      </script>
 
     </ion-pane>
     <script src="lib/firebase/firebase.js"></script>

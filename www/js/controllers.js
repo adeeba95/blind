@@ -1,14 +1,14 @@
 // Add Note
 app.controller('LoginCtrl', function($scope){
-	console.log('LoginCtrl loaded');
+  console.log('LoginCtrl loaded');
 });
 
 app.controller('SignupCtrl', function($scope){
-	console.log('SignupCtrl loaded');
+  console.log('SignupCtrl loaded');
 });
 
 app.controller('ListenCtrl', function($scope){
-	console.log('ListenCtrl loaded');
+  console.log('ListenCtrl loaded');
 });
 
 app.controller('expandCollapseCtrl', function ($scope) {
@@ -47,25 +47,25 @@ app.controller('MyCtrl', function($scope) {
 });
 
 app.controller('PlayerCtrl', function($scope){
-	console.log('PlayerCtrl loaded');
+  console.log('PlayerCtrl loaded');
 });
 
 app.controller('DonorCtrl', function($scope){
-	console.log('DonorCtrl loaded');
+  console.log('DonorCtrl loaded');
 });
 
 app.controller('ListCtrl', function($scope){
-	console.log('ListCtrl loaded');
+  console.log('ListCtrl loaded');
 });
 
 app.controller('RecordCtrl', function($scope){
-	console.log('RecordCtrl loaded');
+  console.log('RecordCtrl loaded');
 });
 
 app.controller('AdminCtrl', function($scope){
-	console.log('AdminCtrl loaded');
+  console.log('AdminCtrl loaded');
 
-	 $scope.groups = [];
+   $scope.groups = [];
   for (var l=0; l<10; l++) {
     $scope.groups[l] = {
       name: l,
@@ -93,5 +93,5 @@ app.controller('AdminCtrl', function($scope){
 });
 
 app.controller('VerifyCtrl', function($scope){
-	console.log('VerifyCtrl loaded');
+  console.log('VerifyCtrl loaded');
 });
