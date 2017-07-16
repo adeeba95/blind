@@ -46,12 +46,18 @@ app.controller('MyCtrl', function($scope) {
   
 });
 
-app.controller('PlayerCtrl', function($scope){
-  console.log('PlayerCtrl loaded');
+app.controller('PlayerCtrl', function($scope, $stateParams,firebaseService){
+  console.log('PlayerCtrl loaded'); 
+  var id=$stateParams.id;
+  $scope.data= firebaseService.get(id);
 });
 
-app.controller('DonorCtrl', function($scope){
+app.controller('DonorCtrl', function($scope,firebaseService){
   console.log('DonorCtrl loaded');
+  console.log(firebaseService.all);
+
+  $scope.all_data = firebaseService.all;
+
 });
 
 app.controller('ListCtrl', function($scope){
@@ -62,19 +68,24 @@ app.controller('RecordCtrl', function($scope){
   console.log('RecordCtrl loaded');
 });
 
-app.controller('AdminCtrl', function($scope){
+app.controller('AdminCtrl', function($scope,firebaseService){
   console.log('AdminCtrl loaded');
 
-   $scope.groups = [];
-  for (var l=0; l<10; l++) {
-    $scope.groups[l] = {
-      name: l,
-      items: []
-    };
-    for (var k=0; k<3; k++) {
-      $scope.groups[l].items.push(l + '-' + k);
-    }
-  }
+  console.log(firebaseService.all);
+
+  $scope.all_data = firebaseService.all;
+
+
+  //  $scope.groups = [];
+  // for (var l=0; l<10; l++) {
+  //   $scope.groups[l] = {
+  //     name: l,
+  //     items: []
+  //   };
+  //   for (var k=0; k<3; k++) {
+  //     $scope.groups[l].items.push(l + '-' + k);
+  //   }
+  // }
   
   /*
    * if given group is the selected group, deselect it
@@ -94,4 +105,26 @@ app.controller('AdminCtrl', function($scope){
 
 app.controller('VerifyCtrl', function($scope){
   console.log('VerifyCtrl loaded');
+});
+
+// app.controller('AddCtrl', function($scope,firebaseService){
+//   console.log('AddCtrl loaded');
+
+//   //on click add
+//   $scope.add = function(newItem){
+
+//   }
+// });
+
+app.controller('AddCtrl', function($scope,$firebaseArray, $state , firebaseService){
+  $scope.saveTitle = function(){
+    $scope.newTitle = firebaseService.all;
+    $scope.newTitle.$add({
+      title: $scope.title.title,
+      chapter: $scope.title.chapter,
+      publisher: $scope.title.publisher,
+      author: $scope.title.author
+    });
+    $state.go('donor');
+  }
 });

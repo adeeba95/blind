@@ -72,7 +72,7 @@ app.config(function($stateProvider, $urlRouterProvider){
   });
 
   $stateProvider.state('admin', {
-    url: '/admin',
+    url: '/admin:/id',
     templateUrl: 'admin.html',
     controller: 'AdminCtrl'
   });

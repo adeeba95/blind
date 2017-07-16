@@ -38,6 +38,8 @@
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/service.js"></script>
+    <!-- <script src="lib/firebase/firebase.js"></script>
+    <script src="lib/angularfire/dist/angularfire.min.js"></script> -->
   </head>
   <body ng-app="noteit">
 
@@ -74,7 +76,7 @@
             <div class="row">
               <div class="col">
                <div class="list" ng-controller="LoginCtrl">
-                <div class="app-logo"><img src="img/ionic.png"></div> 
+                <div class="app-logo"><center><img src="img/ionic.png"></center>></div> 
                 
                 <div class="list list-inset removePM">
                   <label class="item item-input"><input type="text" ng-model="user.username" placeholder="Email Address" > </label>
@@ -173,20 +175,21 @@
               <button class="button button-calm">
                   Cancel
               </button>
-          </div>
+            </div>
            <ion-list>
-              <div ng-repeat="group in groups">
+              <div ng-repeat="book in all_data">
                 <ion-item class="item-stable"
-                          ng-click="toggleGroup(group)"
-                          ng-class="{active: isGroupShown(group)}">
+                          ng-click="toggleGroup(group)">
                     <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i>
                   &nbsp;
-                  Group {{group.name}}
+                   {{book.title}}<br/>
+                   {{book.publisher}}<br/>
+                   {{book.author}}<br/>
                 </ion-item>
                 <ion-item class="item-accordion"
-                          ng-repeat="item in group.items"
-                          ng-show="isGroupShown(group)"
-                          ui-sref="player" 
+                          ng-repeat="item in book.subchapter"
+                          
+                          ui-sref="player({id: item.$id})" 
                           href="#/player">
                   {{item}}
                 </ion-item>
@@ -260,26 +263,31 @@ s               <div class="col">
                       Cancel
                     </button>
                   </div>
-                  <button class="button icon-right ion-ios-plus" ui-sref="add" href="#/add">Add</button>
+                  <button class="button icon-right ion-ios-plus" ui-sref="add" href="#/add" align="right">Add</button>
                   
-                    <!-- <ion-item ng-repeat="book in all_data">
-                      <ion-thumbnail item-start>
-                        <img src="img/book.jpg">
-                      </ion-thumbnail>
-                      <h2>
-                        {{ book.subchapter }}
-                      </h2>
-                      <p>Hayao Miyazaki • 1988</p>
+                    <ion-item ng-repeat="book in all_data" 
+                              class="item-stable"
+                              ng-click="toggleGroup(group)">
+                      <!-- <ion-thumbnail item-right >
+                        <img src="img/pocket.jpg" height="42" width="42">
+                      </ion-thumbnail> -->
+                              &nbsp;
+                              <br/>
+                             {{book.title}}<br/>
+                             {{book.publisher}}<br/>
+                             {{book.author}}<br/>
                       <button class='ion-button clear item-end' ui-sref="list" href="#/list">View</button>
-                    </ion-item> -->
-                    <ion-item>
+                    </ion-item>
+                    <!-- <ion-item>
                     <ion-thumbnail item-start>
                       <img src="img/book.jpg">
                     </ion-thumbnail>
                     <h2>My Neighbor Totoro</h2>
-                    <p>Hayao Miyazaki • 1988</p>
+                    <p>Hayao Miyazaki</p>
+                    <p>International</p>
                     <button class='ion-button clear item-end' ui-sref="list" href="#/list">View</button>
-                  </ion-item>
+                    </ion-item> -->
+                    
                 </ion-list>        
               </div>
               </div>
@@ -348,25 +356,30 @@ s               <div class="col">
       <script type="text/ng-template" id="admin.html">
         <ion-view view-title="Admin">
           <ion-content class="note-content">
+            <div class="row">
+              <div class="col">
+                <ion-list ng-controller = "AdminCtrl">
+                  <!-- <div ng-repeat="book in all_data"> -->
+                    <ion-item ng-repeat="book in all_data" 
+                              class="item-stable"
+                              ng-click="toggleGroup(group)">
+                              &nbsp;
+                             {{book.title}}<br/>
+                             {{book.publisher}}<br/>
+                             {{book.author}}<br/>
 
-           <ion-list>
-              <div ng-repeat="group in groups">
-                <ion-item class="item-stable"
-                          ng-click="toggleGroup(group)"
-                          ng-class="{active: isGroupShown(group)}">
-                    <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i>
-                  &nbsp;
-                  Group {{group.name}}
-                </ion-item>
-                <ion-item class="item-accordion"
-                          ng-repeat="item in group.items"
-                          ng-show="isGroupShown(group)"
-                          ui-sref="verify" 
-                          href="#/verify">
-                  {{item}}
-                </ion-item>
+                    </ion-item>
+                    <!-- <ion-item class="item-accordion"
+                              ng-repeat="item in book.subchapter"
+                              
+                              ui-sref="player({id: item.$id})" 
+                              href="#/player">
+                      {{item}}
+                    </ion-item> -->
+                  </div>
+                </ion-list>
               </div>
-            </ion-list>  
+            </div> 
           </ion-content>
         </ion-view>  
       </script>
@@ -412,29 +425,33 @@ s               <div class="col">
 
       <!-- ADD -->
       <script type="text/ng-template" id="add.html">
-        <ion-view view-title="Add">
+        <ion-view view-title="Add Book">
           <ion-content class="note-content">
             <div class="row">
-              <div class="col">
-                <div class="list">
+              <div class="col" >
+                <div class="list" ng-controller="AddCtrl">
                   <label class="item item-input item-stacked-label">
                     <span class="input-label">Title</span>
-                    <input type="text" ng-model="newItem.title">
+                    <input type="text" ng-model="title.title">
                   </label>
                   <label class="item item-input item-stacked-label">
                     <span class="input-label">Chapter</span>
-                    <input type="text" ng-model="newItem.chapter">
+                    <input type="text" ng-model="title.chapter">
                   </label>
                   <label class="item item-input item-stacked-label">
                     <span class="input-label">Publisher</span>
-                    <input type="text" ng-model="newItem.publisher">
+                    <input type="text" ng-model="title.publisher">
                   </label>
                   <label class="item item-input item-stacked-label">
                     <span class="input-label">Author</span>
-                    <input type="text" ng-model="newItem.author">
+                    <input type="text" ng-model="title.author">
                   </label>
+                  <div class="submitButton">
+                    <button class="button button-block button-balanced" 
+                            ng-model="addNoteButton" 
+                            ng-click="saveTitle()"> Submit </button>
+                  </div>
                 </div>
-        
               </div>
             </div>
           </ion-content>
@@ -442,7 +459,6 @@ s               <div class="col">
       </script>
 
     </ion-pane>
-    <script src="lib/firebase/firebase.js"></script>
-      <script src="lib/angular-fire/angularfire.min.js"></script>
+    
   </body>
 </html>
