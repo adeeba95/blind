@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('noteit', ['ionic','firebase'])
+var app = angular.module('noteit', ['ionic','firebase','ngAudio'])
 
 app.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -44,25 +44,43 @@ app.config(function($stateProvider, $urlRouterProvider){
   $stateProvider.state('listen', {
     url: '/listen',
     templateUrl: 'listen.html',
-    controller: 'MyCtrl'
+    controller: 'ListenCtrl'
+  });
+
+  $stateProvider.state('listlisten', {
+    url: '/listlisten/',
+    templateUrl: 'listlisten.html',
+    controller: 'ListListenCtrl'
   });
 
    $stateProvider.state('player', {
-    url: '/player/:id',
+    url: '/player/',
     templateUrl: 'player.html',
     controller: 'PlayerCtrl'
   });
 
+   $stateProvider.state('player1', {
+    url: '/player1/',
+    templateUrl: 'player1.html',
+    controller: 'Player1Ctrl'
+  });
+
+   $stateProvider.state('player2', {
+    url: '/player2/',
+    templateUrl: 'player2.html',
+    controller: 'Player2Ctrl'
+  });
+
   $stateProvider.state('donor', {
     url: 'donor',
-        templateUrl: 'donor.html',
+    templateUrl: 'donor.html',
     controller: 'DonorCtrl'
   });
 
-  $stateProvider.state('list', {
-    url: '/list',
-    templateUrl: 'list.html',
-    controller: 'ListCtrl'
+  $stateProvider.state('listdonor', {
+    url: '/listdonor',
+    templateUrl: 'listdonor.html',
+    controller: 'ListDonorCtrl'
   });
 
   $stateProvider.state('record', {

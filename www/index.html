@@ -34,12 +34,14 @@
     <!-- AngularFire -->
     <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
 
+    <!-- ngAudio -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-audio/1.7.4/angular.audio.min.js"></script> 
+
     <!-- your app's js -->
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/service.js"></script>
-    <!-- <script src="lib/firebase/firebase.js"></script>
-    <script src="lib/angularfire/dist/angularfire.min.js"></script> -->
+
   </head>
   <body ng-app="noteit">
 
@@ -57,11 +59,9 @@
               <div class="col">
                 <h3 class="text-center">BLIND AUDIOBOOK</h3>
 
-                <a class="button button-block button-positive" ui-sref="login" href="#/login">DONOR</a>
-
-                <a class="button button-block button-positive" ui-sref="listen" href="#/listen">LISTENER</a>
-
-                <a class="button button-block button-light" ui-sref="admin" href="#/admin">ADMINISTRATOR</a>
+                  <a class="button button-block button-positive" ui-sref="listen" href="#/listen">LISTENER</a>
+                  <a class="button button-block button-positive" ui-sref="login" href="#/login">DONOR</a>
+                  <a class="button button-block button-light" ui-sref="admin" href="#/admin">ADMINISTRATOR</a>
         
               </div>
             </div>
@@ -128,75 +128,67 @@
         </ion-view>
       </script>  
 
-      <!-- listenmenu -->
+      <!-- listen menu -->
       <script type="text/ng-template" id="listen.html">
-        <ion-view view-title="Listen">
+        <ion-view view-title="List of Audiobook">
           <ion-content class="note-content">
-           <!-- <div class="row">
-          <div class="col">
-            <div class="panel panel-default" ng-controller="expandCollapseCtrl">
-              <div class="panel panel-default">
-                <div class="panel-heading collapsed" data-toggle="collapse" data-target="#collapseList">
-                  <h3 class="panel-title">
-                    Collapsible List Group
-                  </h3>
+            <div class="list" ng-controller="ListenCtrl">
+              <div class="row">
+                <div class="col">
+                  <ion-list>
+                    <div class="bar bar-header item-input-inset">
+                      <label class="item-input-wrapper">
+                        <i class="icon ion-ios-search placeholder-icon"></i>
+                        <input type="search" placeholder="Search">
+                      </label>
+                      <button class="button button-calm">
+                          Cancel
+                      </button>
+                    </div>
+                    <ion-item ng-repeat="book in all_data" 
+                                    class="item-stable"
+                                    ng-click="toggleGroup(group)">
+                                    &nbsp;
+                                    <br/>
+
+                                   {{book.title}}<br/>
+                                   {{book.publisher}}<br/>
+                                   {{book.author}}<br/>
+                        <button class='ion-button clear item-end' ui-sref="listlisten({id: book.$id})" href="#/listlisten/">View</button>
+                    </ion-item>
+                  </ion-list>
                 </div>
-                <ul id="collapseList" class="list-group collapse">
-                   <li class="list-group-item">Bootply</li>
-                   <li class="list-group-item">Triveo</li>
-                   <li class="list-group-item">Behance</li>
-                </ul>
-                  <div class="panel panel-default" id="accordion" >
-                    <div role="tab" id="headingOne">
-                         <a role="button" href="javascript:;" data-toggle="collapse" data-parent="#accordion" 
-                            data-target="#collapseList" aria-expanded="false" aria-controls="collapseList">
-                              Click me
-                          </a>
-                    </div>
-                    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
-                       aria-labelledby="headingOne">
-                          Data
-                    </div>
-                    <ul id="collapseList" class="list-group collapse">
-                       <li class="list-group-item">Bootply</li>
-                       <li class="list-group-item">Triveo</li>
-                       <li class="list-group-item">Behance</li>
-                    </ul>  
-                  </div>
-              </div>
-             </div> 
-           </div>
-           </div>  -->
-           <div class="bar bar-header item-input-inset">
-              <label class="item-input-wrapper">
-                <i class="icon ion-ios-search placeholder-icon"></i>
-                <input type="search" placeholder="Search">
-              </label>
-              <button class="button button-calm">
-                  Cancel
-              </button>
-            </div>
-           <ion-list>
-              <div ng-repeat="book in all_data">
-                <ion-item class="item-stable"
-                          ng-click="toggleGroup(group)">
-                    <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i>
-                  &nbsp;
-                   {{book.title}}<br/>
-                   {{book.publisher}}<br/>
-                   {{book.author}}<br/>
-                </ion-item>
-                <ion-item class="item-accordion"
-                          ng-repeat="item in book.subchapter"
-                          
-                          ui-sref="player({id: item.$id})" 
-                          href="#/player">
-                  {{item}}
-                </ion-item>
-              </div>
-            </ion-list>  
+              </div>      
           </ion-content>
         </ion-view>  
+      </script>
+
+      <!--list Listen-->
+      <script type="text/ng-template" id="listlisten.html">
+        <ion-view view-title="List of Chapter">
+          <ion-content class="note-content">
+            <div class="row">
+              <div class="col">
+
+               <div class="list" ng-controller="ListListenCtrl">
+                  <!-- <ul class="list">
+                    
+                    <ion-item ng-repeat="(key,chapter) in ntahmende">
+                                    
+                      <li class="item" ui-sref="player" href="#/player">Chapter {{chapter}}</li>
+                    </ion-item>  
+                  </ul> -->
+                  <ul class="list">
+                      <li class="item" ui-sref="player" href="#/player">Chapter 1</li>
+                      <li class="item" ui-sref="player1" href="#/player1">Chapter 2</li>
+                      <li class="item" ui-sref="player2" href="#/player2">Chapter 3</li>
+                  </ul>
+              </div>
+
+              </div>
+            </div>
+          </ion-content>
+        </ion-view>
       </script>
 
       <!-- RECORD -->
@@ -214,11 +206,25 @@
                   </button>
                   <h6 style="color:black;">Tap To Resume Recording</h6> -->
                 </a>
-s               <div class="col">
-                  <a href="#" class="button button-block">
-                    Play
-                  </a>      
+                <!-- <audio controls>
+                    <source ng-src="songs/Drum.mp3" type="audio/mp3"/>
+                    <source ng-src="songs/Drum.ogg" type="audio/ogg"/>
+                </audio> -->
+                
+                  <div style="text-align:center;" class='item-input-wrapper'>
+                      <label style="color:black;">Current Time</label>
+                     <input  style="text-align:center;" type=text ng-model='audio.currentTime'/>
+                     <!-- <label>Volume</label>
+                     <ion-icon name="volume-up"></ion-icon> -->
+                     <input type=range min=0 max=1 step=0.01 ng-model='audio.volume'/>
+                  </div>
+                  <br>  
+                  <div>
+                     <button class="button button-block button-calm" ng-click='audio.paused ? audio.play() : audio.pause()'>Play / Pause</button>
+                     <button class="button button-block button-calm" ng-click='audio.restart()'>Stop</button>
+                     <button class="button button-block button-calm" ng-click='audio.muting = !audio.muting'>Mute</button>
                 </div>
+
                   <!-- <div class="row two_btn">
                       <div class="col">
                         <a  href="#"  class="button button-block main_btn">
@@ -237,6 +243,62 @@ s               <div class="col">
           </ion-content>
         </ion-view>
       </script> 
+
+      <!-- Player 1 -->
+      <script type="text/ng-template" id="player1.html">
+        <ion-view view-title="Play">
+          <ion-content class="note-content">
+            <div class="row">
+              <div class="col">
+               <div class="list" ng-controller="Player1Ctrl">
+                <a style="text-align:center;">             
+                  <h2 style="color:blue;">09:45</h2>
+                  <img src="img/audio-image-1.jpg">
+                </a>
+                <div style="text-align:center;" class='item-input-wrapper'>
+                      <label style="color:black;">Current Time</label>
+                     <input  style="text-align:center;" type=text ng-model='audio.currentTime'>
+                     <input type=range min=0 max=1 step=0.01 ng-model='audio.volume'>
+                </div> 
+                <div>
+                     <button class="button button-block button-calm" ng-click='audio.paused ? audio.play() : audio.pause()'>Play / Pause</button>
+                     <button class="button button-block button-calm" ng-click='audio.restart()'>Stop</button>
+                     <button class="button button-block button-calm" ng-click='audio.muting = !audio.muting'>Mute</button>
+                </div>
+               </div>        
+              </div>
+            </div>
+          </ion-content>
+        </ion-view>
+      </script>
+
+      <!-- Player 2 -->
+      <script type="text/ng-template" id="player2.html">
+        <ion-view view-title="Play">
+          <ion-content class="note-content">
+            <div class="row">
+              <div class="col">
+               <div class="list" ng-controller="Player2Ctrl">
+                <a style="text-align:center;">             
+                  <h2 style="color:blue;">09:45</h2>
+                  <img src="img/audio-image-1.jpg">
+                </a>
+                <div style="text-align:center;" class='item-input-wrapper'>
+                      <label style="color:black;">Current Time</label>
+                     <input  style="text-align:center;" type=text ng-model='audio.currentTime'>
+                     <input type=range min=0 max=1 step=0.01 ng-model='audio.volume'>
+                </div> 
+                <div>
+                     <button class="button button-block button-calm" ng-click='audio.paused ? audio.play() : audio.pause()'>Play / Pause</button>
+                     <button class="button button-block button-calm" ng-click='audio.restart()'>Stop</button>
+                     <button class="button button-block button-calm" ng-click='audio.muting = !audio.muting'>Mute</button>
+                </div>
+               </div>        
+              </div>
+            </div>
+          </ion-content>
+        </ion-view>
+      </script>
 
       <!-- DONOR -->
       <script type="text/ng-template" id="donor.html">
@@ -263,7 +325,10 @@ s               <div class="col">
                       Cancel
                     </button>
                   </div>
-                  <button class="button icon-right ion-ios-plus" ui-sref="add" href="#/add" align="right">Add</button>
+                  <div style="text-align:right;">
+                    <button class="button icon-right ion-ios-plus" ui-sref="add" href="#/add" align="right">Add</button>
+                  </div>
+                  
                   
                     <ion-item ng-repeat="book in all_data" 
                               class="item-stable"
@@ -276,7 +341,7 @@ s               <div class="col">
                              {{book.title}}<br/>
                              {{book.publisher}}<br/>
                              {{book.author}}<br/>
-                      <button class='ion-button clear item-end' ui-sref="list" href="#/list">View</button>
+                      <button class='ion-button clear item-end' ui-sref="listdonor" href="#/listdonor">View</button>
                     </ion-item>
                     <!-- <ion-item>
                     <ion-thumbnail item-start>
@@ -296,20 +361,28 @@ s               <div class="col">
         </ion-view>
       </script>
 
-      <!--list -->
-      <script type="text/ng-template" id="list.html">
+      <!--list Donor-->
+      <script type="text/ng-template" id="listdonor.html">
         <ion-view view-title="List of Chapter">
           <ion-content class="note-content">
             <div class="row">
               <div class="col">
 
-               <div class="list" ng-controller="ListCtrl">
+               <div class="list" ng-controller="ListDonorCtrl">
                   <ul class="list">
-                      <li class="item" ui-sref="record" href="#/record">Chapter 1</li>
-                      <li class="item" ui-sref="record" href="#/record">Chapter 2</li>
-                      <li class="item" ui-sref="record" href="#/record">Chapter 3</li>
+                      <li class="item" ui-sref="record" href="#/record">Chapter 4</li>
                   </ul>
               </div>
+                <!-- <ion-item ng-repeat="book in data" 
+                              class="item-stable"
+                              ng-click="toggleGroup(group)">
+                              &nbsp;
+                              <br/>
+                             {{book.title}}<br/>
+                             {{book.publisher}}<br/>
+                             {{book.author}}<br/>
+                      <button class='ion-button clear item-end' ui-sref="list" href="#/list">View</button>
+                </ion-item> -->
               </div>
             </div>
           </ion-content>
@@ -369,13 +442,13 @@ s               <div class="col">
                              {{book.author}}<br/>
 
                     </ion-item>
-                    <!-- <ion-item class="item-accordion"
+                    <ion-item class="item-accordion"
                               ng-repeat="item in book.subchapter"
                               
-                              ui-sref="player({id: item.$id})" 
+                              ui-sref="player({id: title.$id})" 
                               href="#/player">
-                      {{item}}
-                    </ion-item> -->
+                      {{title}}
+                    </ion-item>
                   </div>
                 </ion-list>
               </div>

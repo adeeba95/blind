@@ -7,49 +7,27 @@ app.controller('SignupCtrl', function($scope){
   console.log('SignupCtrl loaded');
 });
 
-app.controller('ListenCtrl', function($scope){
+app.controller('ListenCtrl', function($scope,firebaseService){
   console.log('ListenCtrl loaded');
+
+    console.log(firebaseService.all);
+
+  $scope.all_data = firebaseService.all;
 });
 
-app.controller('expandCollapseCtrl', function ($scope) {
-        $scope.active = true;
-        $scope.active1 = true;
-        
-});
-
-app.controller('MyCtrl', function($scope) {
-  $scope.groups = [];
-  for (var i=0; i<10; i++) {
-    $scope.groups[i] = {
-      name: i,
-      items: []
-    };
-    for (var j=0; j<3; j++) {
-      $scope.groups[i].items.push(i + '-' + j);
-    }
-  }
-  
-  /*
-   * if given group is the selected group, deselect it
-   * else, select the given group
-   */
-  $scope.toggleGroup = function(group) {
-    if ($scope.isGroupShown(group)) {
-      $scope.shownGroup = null;
-    } else {
-      $scope.shownGroup = group;
-    }
-  };
-  $scope.isGroupShown = function(group) {
-    return $scope.shownGroup === group;
-  };
-  
-});
-
-app.controller('PlayerCtrl', function($scope, $stateParams,firebaseService){
+app.controller('PlayerCtrl', function($scope,ngAudio){
   console.log('PlayerCtrl loaded'); 
-  var id=$stateParams.id;
-  $scope.data= firebaseService.get(id);
+  $scope.audio = ngAudio.load('songs/Drum.mp3');
+});
+
+app.controller('Player1Ctrl', function($scope,ngAudio){
+  console.log('Player1Ctrl loaded'); 
+  $scope.audio = ngAudio.load('songs/Boom.mp3');
+});
+
+app.controller('Player2Ctrl', function($scope,ngAudio){
+  console.log('Player2Ctrl loaded'); 
+  $scope.audio = ngAudio.load('songs/Funny.mp3');
 });
 
 app.controller('DonorCtrl', function($scope,firebaseService){
@@ -60,11 +38,21 @@ app.controller('DonorCtrl', function($scope,firebaseService){
 
 });
 
-app.controller('ListCtrl', function($scope){
-  console.log('ListCtrl loaded');
+app.controller('ListDonorCtrl', function($scope){
+  console.log('ListDonorCtrl loaded');
+  // var id=$stateParams.id;
+  // $scope.data= firebaseService.get(id);
+});
+
+app.controller('ListListenCtrl', function($scope){
+  console.log('ListListenCtrl loaded');
+  // var id=$stateParams.id;
+  // $scope.ntahmende= firebaseService.get(id).chapter;
+  // console.log($scope.ntahmende);
 });
 
 app.controller('RecordCtrl', function($scope){
+
   console.log('RecordCtrl loaded');
 });
 
@@ -91,16 +79,16 @@ app.controller('AdminCtrl', function($scope,firebaseService){
    * if given group is the selected group, deselect it
    * else, select the given group
    */
-  $scope.toggleGroup = function(group) {
-    if ($scope.isGroupShown(group)) {
-      $scope.shownGroup = null;
-    } else {
-      $scope.shownGroup = group;
-    }
-  };
-  $scope.isGroupShown = function(group) {
-    return $scope.shownGroup === group;
-  };
+  // $scope.toggleGroup = function(group) {
+  //   if ($scope.isGroupShown(group)) {
+  //     $scope.shownGroup = null;
+  //   } else {
+  //     $scope.shownGroup = group;
+  //   }
+  // };
+  // $scope.isGroupShown = function(group) {
+  //   return $scope.shownGroup === group;
+  // };
 });
 
 app.controller('VerifyCtrl', function($scope){

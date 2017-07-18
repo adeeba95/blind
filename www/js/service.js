@@ -7,7 +7,10 @@ app.factory('firebaseService',function($firebaseArray){
 	var firebaseService = {
 		all:notes,
 		get:function(noteId){
-			return notes.$getRecord(noteId);
+			return notes.$getRecord(noteId)
+		},
+		getSubChapter: function(ID){
+			return notes.$getRecord(ID).child("chapter")
 		}
 	}
 
