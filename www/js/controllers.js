@@ -17,7 +17,7 @@ app.controller('ListenCtrl', function($scope,firebaseService){
 
 app.controller('PlayerCtrl', function($scope,ngAudio){
   console.log('PlayerCtrl loaded'); 
-  $scope.audio = ngAudio.load('songs/Drum.mp3');
+  $scope.audio = ngAudio.load('songs/chapter-1.mp3');
 });
 
 app.controller('Player1Ctrl', function($scope,ngAudio){
@@ -35,6 +35,20 @@ app.controller('DonorCtrl', function($scope,firebaseService){
   console.log(firebaseService.all);
 
   $scope.all_data = firebaseService.all;
+  $scope.data = {
+    speechText: ''
+  };
+  $scope.speakText = function() {
+    TTS.speak({
+           text: $scope.data.speechText,
+           locale: 'es-ES',
+           rate: 0.75
+       }, function () {
+           console.log('Data sent');
+       }, function (reason) {
+           // Handle the error case
+       });
+  };
 
 });
 

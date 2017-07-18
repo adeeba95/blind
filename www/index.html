@@ -37,6 +37,9 @@
     <!-- ngAudio -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-audio/1.7.4/angular.audio.min.js"></script> 
 
+    <!-- ngRecorder -->
+    <script src="angular-audio-recorder.min.js"></script>
+
     <!-- your app's js -->
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
@@ -60,7 +63,7 @@
                 <h3 class="text-center">BLIND AUDIOBOOK</h3>
 
                   <a class="button button-block button-positive" ui-sref="listen" href="#/listen">LISTENER</a>
-                  <a class="button button-block button-positive" ui-sref="login" href="#/login">DONOR</a>
+                  <a class="button button-block button-positive" ui-sref="donor" href="#/donor">DONOR</a>
                   <a class="button button-block button-light" ui-sref="admin" href="#/admin">ADMINISTRATOR</a>
         
               </div>
@@ -151,9 +154,9 @@
                                     &nbsp;
                                     <br/>
 
-                                   {{book.title}}<br/>
-                                   {{book.publisher}}<br/>
-                                   {{book.author}}<br/>
+                                   Title : {{book.title}}<br/>
+                                   Publisher : {{book.publisher}}<br/>
+                                   Author : {{book.author}}<br/>
                         <button class='ion-button clear item-end' ui-sref="listlisten({id: book.$id})" href="#/listlisten/">View</button>
                     </ion-item>
                   </ion-list>
@@ -191,15 +194,16 @@
         </ion-view>
       </script>
 
-      <!-- RECORD -->
+      <!-- Player -->
       <script type="text/ng-template" id="player.html">
         <ion-view view-title="Play">
           <ion-content class="note-content">
             <div class="row">
               <div class="col">
                <div class="list" ng-controller="PlayerCtrl">
-                <a style="text-align:center;">             
-                  <h2 style="color:blue;">09:45</h2>
+                <a style="text-align:center;">     
+                  <br>
+                  <br>       
                   <img src="img/audio-image-1.jpg">
                   <!-- <button class="button button-full button-large" class="button button-icon record_btn">
                     <i class="ion-android-microphone"></i>
@@ -218,11 +222,11 @@
                      <ion-icon name="volume-up"></ion-icon> -->
                      <input type=range min=0 max=1 step=0.01 ng-model='audio.volume'/>
                   </div>
-                  <br>  
+                  <br>
+                  <br>   
                   <div>
-                     <button class="button button-block button-calm" ng-click='audio.paused ? audio.play() : audio.pause()'>Play / Pause</button>
-                     <button class="button button-block button-calm" ng-click='audio.restart()'>Stop</button>
-                     <button class="button button-block button-calm" ng-click='audio.muting = !audio.muting'>Mute</button>
+                     <button class="button button-block button-calm" ng-click='audio.paused ? audio.play() : audio.pause()'><i class="ion-play"></i>  /  <i class="ion-pause"></i></button>
+                     <button class="button button-block button-calm" ng-click='audio.restart()'><i class="ion-stop"></button>
                 </div>
 
                   <!-- <div class="row two_btn">
@@ -251,19 +255,21 @@
             <div class="row">
               <div class="col">
                <div class="list" ng-controller="Player1Ctrl">
-                <a style="text-align:center;">             
-                  <h2 style="color:blue;">09:45</h2>
+                <a style="text-align:center;">     
+                  <br>
+                  <br>       
                   <img src="img/audio-image-1.jpg">
                 </a>
                 <div style="text-align:center;" class='item-input-wrapper'>
                       <label style="color:black;">Current Time</label>
-                     <input  style="text-align:center;" type=text ng-model='audio.currentTime'>
-                     <input type=range min=0 max=1 step=0.01 ng-model='audio.volume'>
-                </div> 
+                     <input  style="text-align:center;" type=text ng-model='audio.currentTime'/>
+                     <input type=range min=0 max=1 step=0.01 ng-model='audio.volume'/>
+                </div>
+                  <br>
+                  <br>   
                 <div>
-                     <button class="button button-block button-calm" ng-click='audio.paused ? audio.play() : audio.pause()'>Play / Pause</button>
-                     <button class="button button-block button-calm" ng-click='audio.restart()'>Stop</button>
-                     <button class="button button-block button-calm" ng-click='audio.muting = !audio.muting'>Mute</button>
+                  <button class="button button-block button-calm" ng-click='audio.paused ? audio.play() : audio.pause()'><i class="ion-play"></i>  /  <i class="ion-pause"></i></button>
+                  <button class="button button-block button-calm" ng-click='audio.restart()'><i class="ion-stop"></button>
                 </div>
                </div>        
               </div>
@@ -279,19 +285,25 @@
             <div class="row">
               <div class="col">
                <div class="list" ng-controller="Player2Ctrl">
-                <a style="text-align:center;">             
-                  <h2 style="color:blue;">09:45</h2>
+                <a style="text-align:center;">     
+                  <br>
+                  <br>       
                   <img src="img/audio-image-1.jpg">
                 </a>
                 <div style="text-align:center;" class='item-input-wrapper'>
                       <label style="color:black;">Current Time</label>
-                     <input  style="text-align:center;" type=text ng-model='audio.currentTime'>
-                     <input type=range min=0 max=1 step=0.01 ng-model='audio.volume'>
-                </div> 
+                     <input  style="text-align:center;" type=text ng-model='audio.currentTime'/>
+                     <input type=range min=0 max=1 step=0.01 ng-model='audio.volume'/>
+                </div>
+                  <br>
+                  <br>   
                 <div>
-                     <button class="button button-block button-calm" ng-click='audio.paused ? audio.play() : audio.pause()'>Play / Pause</button>
-                     <button class="button button-block button-calm" ng-click='audio.restart()'>Stop</button>
-                     <button class="button button-block button-calm" ng-click='audio.muting = !audio.muting'>Mute</button>
+                  <button class="button button-block button-calm" ng-click='audio.paused ? audio.play() : audio.pause()'>
+                   <i class="ion-play"></i>  /  <i class="ion-pause"></i>
+                  </button>
+                  <button class="button button-block button-calm" ng-click='audio.restart()'>
+                    <i class="ion-stop"> </i>
+                  </button>
                 </div>
                </div>        
               </div>
@@ -332,15 +344,16 @@
                   
                     <ion-item ng-repeat="book in all_data" 
                               class="item-stable"
+                              ng-model="data.speechText"
                               ng-click="toggleGroup(group)">
                       <!-- <ion-thumbnail item-right >
                         <img src="img/pocket.jpg" height="42" width="42">
                       </ion-thumbnail> -->
                               &nbsp;
                               <br/>
-                             {{book.title}}<br/>
-                             {{book.publisher}}<br/>
-                             {{book.author}}<br/>
+                              Title : {{book.title}}<br/>
+                              Publisher : {{book.publisher}}<br/>
+                              Author : {{book.author}}<br/>
                       <button class='ion-button clear item-end' ui-sref="listdonor" href="#/listdonor">View</button>
                     </ion-item>
                     <!-- <ion-item>
@@ -395,7 +408,7 @@
           <ion-content class="note-content">
             
                <div class="list" ng-controller="RecordCtrl">
-               <div class="row">
+               <!-- <div class="row">
               <div class="col">
                 <a style="text-align:center;">             
                   <h2 style="color:blue;">09:45</h2>
@@ -420,6 +433,38 @@
                   </div> 
                 </div>        
               </div>
+            </div> -->
+            <ng-audio-recorder id='audioInput' audio-model='recordedInput'>
+                <a style="text-align:center;">  
+                  <br>
+                  <br>           
+                  <img src="img/audio-image-1.jpg">
+                </a>
+              <!-- Start controls, exposed via recorder-->
+              <div ng-if="recorder.isAvailable">
+                <button class="button button-full button-large" 
+                        class="button button-icon record_btn"
+                        ng-click="recorder.startRecord()" 
+                        ng-disabled="recorder.status.isRecording">
+                    <i class="ion-mic-a"> Record </i>
+                </button>
+                <button class="button button-full button-large" 
+                        ng-click="recorder.stopRecord()" 
+                        ng-disabled="recorder.status.isRecording === false">
+                    <i class="ion-stop"> Stop Record </i>
+                </button>
+                <button class="button button-full button-large" 
+                        ng-click="recorder.playbackRecording()" 
+                        ng-disabled="recorder.status.isRecording || !recorder.audioModel">
+                    <i class="ion-play"> Play Back </i>
+                </button>
+              </div>
+
+              <div ng-if="!recorder.isAvailable">
+                Message for users when recording is not possible.
+              </div>
+              <!-- End controls-->
+            </ng-audio-recorder>
             </div>
           </ion-content>
         </ion-view>
@@ -436,19 +481,19 @@
                     <ion-item ng-repeat="book in all_data" 
                               class="item-stable"
                               ng-click="toggleGroup(group)">
-                              &nbsp;
-                             {{book.title}}<br/>
-                             {{book.publisher}}<br/>
-                             {{book.author}}<br/>
-
+                              
+                              Title : {{book.title}}<br/>
+                              Publisher : {{book.publisher}}<br/>
+                              Author : {{book.author}}<br/>
+                      <button class='ion-button clear item-end' ui-sref="verify" href="#/verify">View</button>         
                     </ion-item>
-                    <ion-item class="item-accordion"
+                    <!-- <ion-item class="item-accordion"
                               ng-repeat="item in book.subchapter"
                               
                               ui-sref="player({id: title.$id})" 
                               href="#/player">
                       {{title}}
-                    </ion-item>
+                    </ion-item> -->
                   </div>
                 </ion-list>
               </div>
