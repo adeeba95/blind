@@ -1,5 +1,5 @@
 body, h1, h2, h3, h4, h5, h6, p{
-	color:#fff;
+	color:'black';
 }
 
 h3{
@@ -14,6 +14,9 @@ body {
   cursor: url('https://ionicframework.com/img/finger.png'), auto;
 }
 
+.note-content {
+  background-image: url('../img/bg.jpg');
+}
 .list .item.item-accordion {
   line-height: 38px;
   padding-top: 0;

@@ -7,6 +7,7 @@
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
@@ -37,8 +38,13 @@
     <!-- ngAudio -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-audio/1.7.4/angular.audio.min.js"></script> 
 
+
     <!-- ngRecorder -->
     <script src="angular-audio-recorder.min.js"></script>
+
+    <!-- texttospeech -->
+    <script src="https://cdn.pubnub.com/sdk/pubnub-angular/pubnub-angular-3.2.1.min.js"></script>
+    <script src="https://cdn.pubnub.com/pubnub-3.15.1.min.js"></script>
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
@@ -58,78 +64,19 @@
       <script type="text/ng-template" id="home.html">
         <ion-view view-title="Home">
           <ion-content class="note-content">
-            <div class="row">
+            <div class="row" >
               <div class="col">
                 <h3 class="text-center">BLIND AUDIOBOOK</h3>
 
-                  <a class="button button-block button-positive" ui-sref="listen" href="#/listen">LISTENER</a>
-                  <a class="button button-block button-positive" ui-sref="donor" href="#/donor">DONOR</a>
-                  <a class="button button-block button-light" ui-sref="admin" href="#/admin">ADMINISTRATOR</a>
+                  <a class="button button-block button-positive animated bounceInLeft" ng-controller="SpeechListenCtrl" ng-click="sayIt()" ui-sref="listen" href="#/listen">LISTENER</a>
+                  <a class="button button-block button-positive animated bounceInRight" ng-controller="SpeechDonorCtrl" ng-click="sayIt()" ui-sref="donor" href="#/donor">DONOR</a>
+                  <a class="button button-block button-light animated bounceIn" ng-controller="SpeechAdminCtrl" ng-click="sayIt()" ui-sref="admin" href="#/admin">ADMINISTRATOR</a>
         
               </div>
             </div>
           </ion-content>
         </ion-view>
       </script>
-
-      <!-- login -->
-      <script type="text/ng-template" id="login.html">
-        <ion-view view-title="Login">
-          <ion-content class="note-content">
-            <div class="row">
-              <div class="col">
-               <div class="list" ng-controller="LoginCtrl">
-                <div class="app-logo"><center><img src="img/ionic.png"></center>></div> 
-                
-                <div class="list list-inset removePM">
-                  <label class="item item-input"><input type="text" ng-model="user.username" placeholder="Email Address" > </label>
-                  <label class="item item-input"><input type="password" ng-model="user.password" placeholder="Password" > </label>
-                </div>
-
-                <div class="loginButton"><button class="button ion-unlocked button-block button-balanced" ui-sref="donor" href="#/donor"> Login </button>  </div>
-                <div class="loginButton"><button class="button ion-person button-block button-balanced" ui-sref="signup" href="#/signup"> Register </button></div>
-               </div> 
-              </div>
-            </div>
-
-            <div class="row  padding removePM">
-              <div class="col"> <a class=" button-positive button button-block" ng-click="facebookSignIn()"><i class="icon ion-social-facebook"></i></a> </div>
-              <div class="col"> <a class="button-calm button button-block" ng-click="twitterSignIn()"><i class="icon ion-social-twitter"></i></a> </div>
-            </div>
-          </ion-content>
-        </ion-view>
-      </script>
-
-      <!-- signup -->
-      <script type="text/ng-template" id="signup.html">
-        <ion-view view-title="Sign Up" class="loginBg" hide-nav-bar="true" >
-          <ion-content class="padding">
-
-          <div class="row responsive-sm padding remvoeBP">
-            <div class="col">
-             <div class="list" ng-controller="SignupCtrl"> 
-               <div class="app-logo"><img src="img/ionic.png"></div>
-              
-              <div class="list list-inset removePM">
-                <label class="item item-input"><input type="text" placeholder="Full Name"> </label>
-                <label class="item item-input"><input type="text" placeholder="Email Address"> </label>
-                <label class="item item-input"><input type="text" placeholder="Phone Number"> </label>
-                <label class="item item-input"><input type="password" placeholder="Password"> </label>
-              </div>
-
-              <div class="loginButton"><button class="button ion-person button-block button-balanced" ui-sref="login" href="#/login"> Register </button></div>
-             </div> 
-            </div>
-          </div>
-
-          <div class="row  padding removePM">
-            <div class="col"> <a class=" button-positive button button-block" ng-click="facebookSignIn()"><i class="icon ion-social-facebook"></i></a> </div>
-            <div class="col"> <a class="button-calm button button-block" ng-click="twitterSignIn()"><i class="icon ion-social-twitter"></i></a> </div>
-          </div>
-
-          </ion-content>
-        </ion-view>
-      </script>  
 
       <!-- listen menu -->
       <script type="text/ng-template" id="listen.html">
@@ -138,8 +85,8 @@
             <div class="list" ng-controller="ListenCtrl">
               <div class="row">
                 <div class="col">
-                  <ion-list>
-                    <div class="bar bar-header item-input-inset">
+                  <ion-list ng-controller="SpeechListBookCtrl" ng-click="sayIt()">
+<!--                     <div class="bar bar-header item-input-inset">
                       <label class="item-input-wrapper">
                         <i class="icon ion-ios-search placeholder-icon"></i>
                         <input type="search" placeholder="Search">
@@ -147,17 +94,17 @@
                       <button class="button button-calm">
                           Cancel
                       </button>
-                    </div>
+                    </div> -->
                     <ion-item ng-repeat="book in all_data" 
                                     class="item-stable"
-                                    ng-click="toggleGroup(group)">
+                                    ng-click="toggleGroup(group)"
+                                    href="#/listlisten/">
                                     &nbsp;
                                     <br/>
 
                                    Title : {{book.title}}<br/>
                                    Publisher : {{book.publisher}}<br/>
                                    Author : {{book.author}}<br/>
-                        <button class='ion-button clear item-end' ui-sref="listlisten({id: book.$id})" href="#/listlisten/">View</button>
                     </ion-item>
                   </ion-list>
                 </div>
@@ -182,9 +129,9 @@
                     </ion-item>  
                   </ul> -->
                   <ul class="list">
-                      <li class="item" ui-sref="player" href="#/player">Chapter 1</li>
-                      <li class="item" ui-sref="player1" href="#/player1">Chapter 2</li>
-                      <li class="item" ui-sref="player2" href="#/player2">Chapter 3</li>
+                      <li class="item" ng-controller="Chapter1Ctrl" ng-click="sayIt()" ui-sref="player" href="#/player">Chapter 1</li>
+                      <li class="item" ng-controller="Chapter2Ctrl" ng-click="sayIt()" ui-sref="player1" href="#/player1">Chapter 2</li>
+                      <li class="item" ng-controller="Chapter3Ctrl" ng-click="sayIt()" ui-sref="player2" href="#/player2">Chapter 3</li>
                   </ul>
               </div>
 
@@ -196,7 +143,7 @@
 
       <!-- Player -->
       <script type="text/ng-template" id="player.html">
-        <ion-view view-title="Play">
+        <ion-view view-title="Player">
           <ion-content class="note-content">
             <div class="row">
               <div class="col">
@@ -225,9 +172,9 @@
                   <br>
                   <br>   
                   <div>
-                     <button class="button button-block button-calm" ng-click='audio.paused ? audio.play() : audio.pause()'><i class="ion-play"></i>  /  <i class="ion-pause"></i></button>
-                     <button class="button button-block button-calm" ng-click='audio.restart()'><i class="ion-stop"></button>
-                </div>
+                     <button class="button button-block button-calm" ng-click='audio.paused ? audio.play() : audio.pause()' ng-controller="PlayCtrl" ng-click="sayIt()"><i class="ion-play"></i>  /  <i class="ion-pause"></i></button>
+                     <button class="button button-block button-calm" ng-click='audio.restart()' ng-controller="StopCtrl" ng-click="sayIt()"><i class="ion-stop"></button>
+                  </div>
 
                   <!-- <div class="row two_btn">
                       <div class="col">
@@ -250,7 +197,7 @@
 
       <!-- Player 1 -->
       <script type="text/ng-template" id="player1.html">
-        <ion-view view-title="Play">
+        <ion-view view-title="Player">
           <ion-content class="note-content">
             <div class="row">
               <div class="col">
@@ -268,8 +215,8 @@
                   <br>
                   <br>   
                 <div>
-                  <button class="button button-block button-calm" ng-click='audio.paused ? audio.play() : audio.pause()'><i class="ion-play"></i>  /  <i class="ion-pause"></i></button>
-                  <button class="button button-block button-calm" ng-click='audio.restart()'><i class="ion-stop"></button>
+                     <button class="button button-block button-calm" ng-click='audio.paused ? audio.play() : audio.pause()' ng-controller="PlayCtrl" ng-click="sayIt()"><i class="ion-play"></i>  /  <i class="ion-pause"></i></button>
+                     <button class="button button-block button-calm" ng-click='audio.restart()' ng-controller="StopCtrl" ng-click="sayIt()"><i class="ion-stop"></button>
                 </div>
                </div>        
               </div>
@@ -280,7 +227,7 @@
 
       <!-- Player 2 -->
       <script type="text/ng-template" id="player2.html">
-        <ion-view view-title="Play">
+        <ion-view view-title="Player">
           <ion-content class="note-content">
             <div class="row">
               <div class="col">
@@ -298,12 +245,8 @@
                   <br>
                   <br>   
                 <div>
-                  <button class="button button-block button-calm" ng-click='audio.paused ? audio.play() : audio.pause()'>
-                   <i class="ion-play"></i>  /  <i class="ion-pause"></i>
-                  </button>
-                  <button class="button button-block button-calm" ng-click='audio.restart()'>
-                    <i class="ion-stop"> </i>
-                  </button>
+                     <button class="button button-block button-calm" ng-dblclick='audio.paused ? audio.play() : audio.pause()' ng-controller="PlayCtrl" ng-click="sayIt()"><i class="ion-play"></i>  /  <i class="ion-pause"></i></button>
+                     <button class="button button-block button-calm" ng-dblclick='audio.restart()' ng-controller="StopCtrl" ng-click="sayIt()"><i class="ion-stop"></button>
                 </div>
                </div>        
               </div>
@@ -457,6 +400,10 @@
                         ng-click="recorder.playbackRecording()" 
                         ng-disabled="recorder.status.isRecording || !recorder.audioModel">
                     <i class="ion-play"> Play Back </i>
+                </button>
+                <button class="button button-full button-large"> 
+                      
+                     Upload
                 </button>
               </div>
 

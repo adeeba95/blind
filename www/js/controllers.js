@@ -1,10 +1,24 @@
-// Add Note
-app.controller('LoginCtrl', function($scope){
-  console.log('LoginCtrl loaded');
+
+
+app.controller('SpeechListenCtrl', function($rootScope, $scope, Pubnub) {
+  $scope.theText = "Listener";
+  $scope.sayIt = function () {
+      window.speechSynthesis.speak(new SpeechSynthesisUtterance($scope.theText));
+  };
 });
 
-app.controller('SignupCtrl', function($scope){
-  console.log('SignupCtrl loaded');
+app.controller('SpeechDonorCtrl', function($rootScope, $scope, Pubnub) {
+  $scope.theText = "Donor";
+  $scope.sayIt = function () {
+      window.speechSynthesis.speak(new SpeechSynthesisUtterance($scope.theText));
+  };
+});
+
+app.controller('SpeechAdminCtrl', function($rootScope, $scope, Pubnub) {
+  $scope.theText = "Administration";
+  $scope.sayIt = function () {
+      window.speechSynthesis.speak(new SpeechSynthesisUtterance($scope.theText));
+  };
 });
 
 app.controller('ListenCtrl', function($scope,firebaseService){
@@ -13,6 +27,34 @@ app.controller('ListenCtrl', function($scope,firebaseService){
     console.log(firebaseService.all);
 
   $scope.all_data = firebaseService.all;
+});
+
+app.controller('SpeechListBookCtrl', function($rootScope, $scope, Pubnub) {
+  $scope.theText = "Administration";
+  $scope.sayIt = function () {
+      window.speechSynthesis.speak(new SpeechSynthesisUtterance($scope.theText));
+  };
+});
+
+app.controller('Chapter1Ctrl', function($rootScope, $scope, Pubnub) {
+  $scope.theText = "Chapter 1";
+  $scope.sayIt = function () {
+      window.speechSynthesis.speak(new SpeechSynthesisUtterance($scope.theText));
+  };
+});
+
+app.controller('Chapter2Ctrl', function($rootScope, $scope, Pubnub) {
+  $scope.theText = "Chapter 2";
+  $scope.sayIt = function () {
+      window.speechSynthesis.speak(new SpeechSynthesisUtterance($scope.theText));
+  };
+});
+
+app.controller('Chapter3Ctrl', function($rootScope, $scope, Pubnub) {
+  $scope.theText = "Chapter 3";
+  $scope.sayIt = function () {
+      window.speechSynthesis.speak(new SpeechSynthesisUtterance($scope.theText));
+  };
 });
 
 app.controller('PlayerCtrl', function($scope,ngAudio){
@@ -28,6 +70,20 @@ app.controller('Player1Ctrl', function($scope,ngAudio){
 app.controller('Player2Ctrl', function($scope,ngAudio){
   console.log('Player2Ctrl loaded'); 
   $scope.audio = ngAudio.load('songs/Funny.mp3');
+});
+
+app.controller('PlayCtrl', function($rootScope, $scope, Pubnub) {
+  $scope.theText = "Play or pause the audio";
+  $scope.sayIt = function () {
+      window.speechSynthesis.speak(new SpeechSynthesisUtterance($scope.theText));
+  };
+});
+
+app.controller('StopCtrl', function($rootScope, $scope, Pubnub) {
+  $scope.theText = "Stop the audio";
+  $scope.sayIt = function () {
+      window.speechSynthesis.speak(new SpeechSynthesisUtterance($scope.theText));
+  };
 });
 
 app.controller('DonorCtrl', function($scope,firebaseService){
